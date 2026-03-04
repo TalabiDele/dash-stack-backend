@@ -17,7 +17,29 @@ model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   fullName  String
-  password  String?  // <--- Add this (Hashed password)
-  provider  String?  // <--- Add this (e.g., 'google', 'local')
+  password  String?  
+  provider  String?  
   createdAt DateTime @default(now())
+}
+
+// Add the Product model
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  price       Float
+  images      String[] 
+  rating      Float    @default(0.0) 
+  createdAt   DateTime @default(now())
+  orders      Order[]
+}
+
+// Add the Order model
+model Order {
+  id          Int      @id @default(autoincrement())
+  totalAmount Float
+  status      String   // e.g., 'PENDING', 'COMPLETED', 'CANCELLED'
+  createdAt   DateTime @default(now())
+  
+  productId   Int?
+  product     Product? @relation(fields: [productId], references: [id])
 }
