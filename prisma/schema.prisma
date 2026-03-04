@@ -16,8 +16,7 @@ datasource db {
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
-  firstName String
-  lastName  String
+  fullName  String
   password  String?  // <--- Add this (Hashed password)
   provider  String?  // <--- Add this (e.g., 'google', 'local')
   createdAt DateTime @default(now())

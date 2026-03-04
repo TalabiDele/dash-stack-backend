@@ -27,8 +27,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     // if a user has strict privacy settings on their Google account.
     const user = {
       email: emails?.[0]?.value || '',
-      firstName: name?.givenName || '',
-      lastName: name?.familyName || '',
+      fullName: `${name?.givenName || ''} ${name?.familyName || ''}`.trim(),
       picture: photos?.[0]?.value || '',
       accessToken,
     };
