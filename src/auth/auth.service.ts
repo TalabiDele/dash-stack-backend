@@ -66,11 +66,16 @@ export class AuthService {
   // 4. Register (Local)
   async register(data: Prisma.UserCreateInput) {
     if (!data.password) {
-      throw new UnauthorizedException('Password is required');
+      throw new BadRequestException('Password is required');
     }
+
+    // Hash the password before saving
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+
     return this.prisma.user.create({
       data: {
         ...data,
+        password: hashedPassword,
         provider: 'local',
       },
     });

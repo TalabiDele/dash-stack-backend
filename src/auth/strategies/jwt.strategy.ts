@@ -1,4 +1,4 @@
-// src/auth/strategies/jwt.strategy.ts
+import 'dotenv/config';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
@@ -9,12 +9,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      // FIX BELOW: Add a fallback string so it can never be undefined
-      secretOrKey: process.env.JWT_SECRET || 'default_secret_key',
+      secretOrKey: process.env.JWT_SECRET as string,
     });
   }
 
-  async validate(payload: any) {
+  validate(payload: { sub: string; email: string }) {
     return { userId: payload.sub, email: payload.email };
   }
 }

@@ -1,6 +1,5 @@
-import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
-import { AuthGuard } from '@nestjs/passport';
 import {
   ApiTags,
   ApiOperation,
@@ -10,7 +9,6 @@ import {
 
 @ApiTags('dashboard')
 @ApiBearerAuth() // Tells Swagger this needs the JWT token
-@UseGuards(AuthGuard('jwt')) // Protects ALL dashboard routes
 @Controller('dashboard')
 export class DashboardController {
   constructor(private readonly dashboardService: DashboardService) {}
